@@ -4,3 +4,7 @@ resolver = "2"
 
 [profile.dev]
 opt-level = 1 # Use slightly better optimization, so examples work
+
+[patch.crates-io]
+bevy = { path = "/Users/jpedrick/Development/bevy" }
+winit = { path = "/Users/jpedrick/Development/winit-clean" }

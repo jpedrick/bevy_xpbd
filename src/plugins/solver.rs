@@ -8,7 +8,7 @@ use crate::{
     utils::{compute_dynamic_friction, compute_restitution},
 };
 use bevy::{
-    ecs::query::{Has, WorldQuery},
+    ecs::query::{Has, QueryData},
     prelude::*,
 };
 use constraints::penetration::PenetrationConstraint;
@@ -78,8 +78,8 @@ impl Plugin for SolverPlugin {
 #[derive(Resource, Debug, Default)]
 pub struct PenetrationConstraints(pub Vec<PenetrationConstraint>);
 
-/// A [`WorldQuery`] to make code handling colliders in collisions cleaner.
-#[derive(WorldQuery)]
+/// A [`QueryData`] to make code handling colliders in collisions cleaner.
+#[derive(QueryData)]
 struct ColliderQuery<'w> {
     entity: Entity,
     parent: Option<&'w ColliderParent>,

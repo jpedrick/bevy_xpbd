@@ -9,7 +9,7 @@ use parry::shape::{SharedShape, TypedShape};
 #[derive(SystemParam)]
 pub struct PhysicsDebugRenderer<'w, 's> {
     /// A `SystemParam` for drawing lines and shapes using bevy_gizmos.
-    pub gizmos: Gizmos<'s>,
+    pub gizmos: Gizmos<'w, 's>,
     phantom_data: PhantomData<&'w ()>,
 }
 
