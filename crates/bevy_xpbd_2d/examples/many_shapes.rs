@@ -18,6 +18,9 @@ fn main() {
 #[derive(Component)]
 struct Controllable;
 
+#[derive(Component)]
+struct BoxParent;
+
 fn setup(
     mut commands: Commands,
     mut materials: ResMut<Assets<ColorMaterial>>,
@@ -31,6 +34,13 @@ fn setup(
         ..default()
     };
 
+    let mut box_parent = commands.spawn((
+        TransformBundle{
+        ..default()
+        },
+        BoxParent));
+
+    box_parent.with_children(|commands|{
     // Ceiling
     commands.spawn((
         SpriteBundle {
@@ -75,6 +85,7 @@ fn setup(
         RigidBody::Static,
         Collider::rectangle(50.0, 50.0),
     ));
+    });
 
     let circle = Circle::new(7.5);
     let rectangle = Rectangle::new(15.0, 15.0);
@@ -131,6 +142,7 @@ fn movement(
     time: Res<Time>,
     keyboard_input: Res<ButtonInput<KeyCode>>,
     mut marbles: Query<&mut LinearVelocity, With<Controllable>>,
+    mut box_parent: Query<&mut Transform, With<BoxParent>>,
 ) {
     // Precision is adjusted so that the example works with
     // both the `f32` and `f64` features. Otherwise you don't need this.
@@ -149,6 +161,27 @@ fn movement(
         }
         if keyboard_input.any_pressed([KeyCode::KeyD, KeyCode::ArrowRight]) {
             linear_velocity.x += 500.0 * delta_time;
+        }
+    }
+
+    if let Ok(mut box_parent) = box_parent.get_single_mut() {
+        if keyboard_input.pressed(KeyCode::KeyH){
+            box_parent.translation.x -= 500.0 * delta_time;
+        }
+        if keyboard_input.pressed(KeyCode::KeyL){
+            box_parent.translation.x += 500.0 * delta_time;
+        }
+        if keyboard_input.pressed(KeyCode::KeyK){
+            box_parent.translation.y += 500.0 * delta_time;
+        }
+        if keyboard_input.pressed(KeyCode::KeyJ){
+            box_parent.translation.y -= 500.0 * delta_time;
+        }
+        if keyboard_input.pressed(KeyCode::KeyY){
+            box_parent.rotate_around(Vec3::Z, Quat::from_rotation_z(delta_time));
+        }
+        if keyboard_input.pressed(KeyCode::KeyU){
+            box_parent.rotate_around(Vec3::Z, Quat::from_rotation_z(-delta_time));
         }
     }
 }
