@@ -91,9 +91,8 @@ fn render_rays(
             let mut n_hits = 1;
             let mut last_hit_location = origin + direction * hit.time_of_impact as f32;
             gizmos.line_2d(origin, last_hit_location, Color::GREEN);
-            while some_ricochet.is_some() && n_hits < 15 {
+            while some_ricochet.is_some() && n_hits < 64 {
                 if let Some(ricochet) = some_ricochet {
-                    // The hitter is red
                     some_ricochet = sq.cast_ray(
                         last_hit_location,
                         Direction2d::new_unchecked(ricochet.normal),
@@ -109,11 +108,12 @@ fn render_rays(
 
                         let new_hit_location =
                             last_hit_location + (ricochet.normal) * this_hit.time_of_impact as f32;
-                        // The emitter is green
-                        gizmos.circle_2d(last_hit_location, 9., Color::GREEN);
+
+                        gizmos.circle_2d(last_hit_location, 5., Color::YELLOW);
                         gizmos.arrow_2d(last_hit_location, new_hit_location, Color::GREEN);
                         last_hit_location = new_hit_location;
                     } else {
+                        gizmos.circle_2d(last_hit_location, 5., Color::ORANGE);
                         gizmos.ray_2d(
                             last_hit_location,
                             ricochet.normal * 1000.,
