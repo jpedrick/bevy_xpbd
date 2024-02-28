@@ -11,7 +11,10 @@ pub struct XpbdExamplePlugin;
 
 impl Plugin for XpbdExamplePlugin {
     fn build(&self, app: &mut App) {
-        app.add_plugins((PhysicsPlugins::default(), FrameTimeDiagnosticsPlugin))
+        app.add_plugins((PhysicsPlugins::default(), FrameTimeDiagnosticsPlugin,
+                #[cfg(feature="xpbd_debug")]
+                PhysicsDebugPlugin::default(),
+            ))
             .init_state::<AppState>()
             .add_systems(Startup, setup)
             .add_systems(

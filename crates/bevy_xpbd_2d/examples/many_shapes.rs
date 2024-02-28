@@ -34,57 +34,53 @@ fn setup(
         ..default()
     };
 
-    let mut box_parent = commands.spawn((
-        TransformBundle{
-        ..default()
-        },
-        BoxParent));
+    let mut box_parent = commands.spawn((TransformBundle { ..default() }, BoxParent));
 
-    box_parent.with_children(|commands|{
-    // Ceiling
-    commands.spawn((
-        SpriteBundle {
-            sprite: square_sprite.clone(),
-            transform: Transform::from_xyz(0.0, 50.0 * 6.0, 0.0)
-                .with_scale(Vec3::new(20.0, 1.0, 1.0)),
-            ..default()
-        },
-        RigidBody::Static,
-        Collider::rectangle(50.0, 50.0),
-    ));
-    // Floor
-    commands.spawn((
-        SpriteBundle {
-            sprite: square_sprite.clone(),
-            transform: Transform::from_xyz(0.0, -50.0 * 6.0, 0.0)
-                .with_scale(Vec3::new(20.0, 1.0, 1.0)),
-            ..default()
-        },
-        RigidBody::Static,
-        Collider::rectangle(50.0, 50.0),
-    ));
-    // Left wall
-    commands.spawn((
-        SpriteBundle {
-            sprite: square_sprite.clone(),
-            transform: Transform::from_xyz(-50.0 * 9.5, 0.0, 0.0)
-                .with_scale(Vec3::new(1.0, 11.0, 1.0)),
-            ..default()
-        },
-        RigidBody::Static,
-        Collider::rectangle(50.0, 50.0),
-    ));
-    // Right wall
-    commands.spawn((
-        SpriteBundle {
-            sprite: square_sprite,
-            transform: Transform::from_xyz(50.0 * 9.5, 0.0, 0.0)
-                .with_scale(Vec3::new(1.0, 11.0, 1.0)),
-            ..default()
-        },
-        RigidBody::Static,
-        Collider::rectangle(50.0, 50.0),
-    ));
+    box_parent.with_children(|commands| {
+        // Ceiling
+        commands.spawn((
+            SpriteBundle {
+                sprite: square_sprite.clone(),
+                transform: Transform::from_xyz(0.0, 50.0 * 6.0, 0.0)
+                    .with_scale(Vec3::new(20.0, 1.0, 1.0)),
+                ..default()
+            },
+            RigidBody::Static,
+            Collider::rectangle(50.0, 50.0),
+        ));
+        // Floor
+        commands.spawn((
+            SpriteBundle {
+                sprite: square_sprite.clone(),
+                transform: Transform::from_xyz(0.0, -50.0 * 6.0, 0.0)
+                    .with_scale(Vec3::new(20.0, 1.0, 1.0)),
+                ..default()
+            },
+            RigidBody::Static,
+            Collider::rectangle(50.0, 50.0),
+        ));
+        // Left wall
+        commands.spawn((
+            SpriteBundle {
+                sprite: square_sprite.clone(),
+                transform: Transform::from_xyz(-50.0 * 9.5, 0.0, 0.0)
+                    .with_scale(Vec3::new(1.0, 11.0, 1.0)),
+                ..default()
+            },
+            RigidBody::Static,
+            Collider::rectangle(50.0, 50.0),
+        ));
+        // Right wall
+        commands.spawn((
+            SpriteBundle {
+                sprite: square_sprite,
+                transform: Transform::from_xyz(50.0 * 9.5, 0.0, 0.0)
+                    .with_scale(Vec3::new(1.0, 11.0, 1.0)),
+                ..default()
+            },
+            RigidBody::Static,
+            Collider::rectangle(50.0, 50.0),
+        ));
     });
 
     let circle = Circle::new(7.5);
@@ -165,22 +161,22 @@ fn movement(
     }
 
     if let Ok(mut box_parent) = box_parent.get_single_mut() {
-        if keyboard_input.pressed(KeyCode::KeyH){
+        if keyboard_input.pressed(KeyCode::KeyH) {
             box_parent.translation.x -= 500.0 * delta_time;
         }
-        if keyboard_input.pressed(KeyCode::KeyL){
+        if keyboard_input.pressed(KeyCode::KeyL) {
             box_parent.translation.x += 500.0 * delta_time;
         }
-        if keyboard_input.pressed(KeyCode::KeyK){
+        if keyboard_input.pressed(KeyCode::KeyK) {
             box_parent.translation.y += 500.0 * delta_time;
         }
-        if keyboard_input.pressed(KeyCode::KeyJ){
+        if keyboard_input.pressed(KeyCode::KeyJ) {
             box_parent.translation.y -= 500.0 * delta_time;
         }
-        if keyboard_input.pressed(KeyCode::KeyY){
+        if keyboard_input.pressed(KeyCode::KeyY) {
             box_parent.rotate_around(Vec3::Z, Quat::from_rotation_z(delta_time));
         }
-        if keyboard_input.pressed(KeyCode::KeyU){
+        if keyboard_input.pressed(KeyCode::KeyU) {
             box_parent.rotate_around(Vec3::Z, Quat::from_rotation_z(-delta_time));
         }
     }
